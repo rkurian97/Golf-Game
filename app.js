@@ -10,7 +10,7 @@ const ctx= canvas.getContext("2d");
 const golfcourse= document.getElementById("golfcourse")
 ctx.drawImage(golfcourse, 0, 0);
 
-// Drawing the hole 
+// Drawing the hole
 ctx.beginPath();
 ctx.arc(760, 180, 10, 0, 2 * Math.PI);
 ctx.lineWidth = 0;
@@ -23,7 +23,10 @@ const canvas2 = document.getElementById("myCanvas");
 const ctx2 = canvas2.getContext("2d");
 
 //getting golfball image
-const golfball = document.getElementById("golfball");
+// const golfball = document.getElementById("golfball");
+
+const golfball = new Image()
+golfball.src = 'assets/images/golfball2.png'
 
 //Drawing inital golfball onload
 var startx= 150;
@@ -41,7 +44,7 @@ var startover= false;
 var playerTurn=true;
 scoretype= ['Hole-in-One', 'Double Eagle', 'Eagle', 'Birdie', 'Par'];
 
-// draw ball function. clearing the second canvas to get rid of old golfball position. then drawing new one. 
+// draw ball function. clearing the second canvas to get rid of old golfball position. then drawing new one.
 function drawBall(x,y){
     ctx2.clearRect(0,0, canvas2.width, canvas2.height);
     ctx2.drawImage(golfball, x, y, 42, 44.3);
@@ -66,17 +69,17 @@ function match(player){
         drawBall(x,y);
 
         document.getElementById("score").innerHTML=player._name+ ": "; // Display Player
-        
-    }else if (stroke<=4 && x>730){      //Ball reached hole condition 1: ball is close enough to hole and strokes is less than 4. PLayer scored. Startover becomes true player round is over 
+
+    }else if (stroke<=4 && x>730){      //Ball reached hole condition 1: ball is close enough to hole and strokes is less than 4. PLayer scored. Startover becomes true player round is over
         var y= -12/61*x+20100/61;
         drawBall(x,y);
 
         player._stroke=stroke;
         startover=true;
-        
+
         document.getElementById("score").innerHTML=player._name+ ": "+ scoretype[stroke-1]; // display the players scores aka Hole-in-One thru Par
 
-        if (playerTurn==false){            // if it is Player 2 turn. Then match is over. compare strokes between player 1/2 and see who won. 
+        if (playerTurn==false){            // if it is Player 2 turn. Then match is over. compare strokes between player 1/2 and see who won.
             console.log(player1.strokes);
             console.log(player2.strokes);
             if (player1.strokes<player2.strokes){
@@ -88,9 +91,9 @@ function match(player){
             }
         }
         playerTurn=!playerTurn;    // switch player
-        
+
     }
-    else {                            //Ball reached hole condition 2: if stroke reaches 5 then force ball to go to hole by drawing ball at x=755 and startsover. 
+    else {                            //Ball reached hole condition 2: if stroke reaches 5 then force ball to go to hole by drawing ball at x=755 and startsover.
         var x= 755;
         var y= -12/61*x+20100/61;
         drawBall(x,y);
@@ -124,7 +127,7 @@ canvas2.addEventListener('click', function(event){
     }else{                   // if playerturn is false run match with player 2
         match(player2);
     }
-    
+
     //Display results
     document.getElementById("p1wins").innerHTML="Player 1 wins: "+player1.wins;
     document.getElementById("p1losses").innerHTML="Player 1 losses: "+player1.losses;
@@ -133,10 +136,3 @@ canvas2.addEventListener('click', function(event){
     document.getElementById("ties").innerHTML="Ties: "+tie;
 
 });
-
-
-
-
-
-
-
