@@ -3,6 +3,7 @@ class Players{
         this._name=x;
         this._wins=0;
         this._losses=0;
+        this._stroke=0;
     }
 
     get name(){
@@ -24,6 +25,13 @@ class Players{
     }
     set losses(x){
         this._losses=x;
+    }
+
+    get strokes(){
+        return this._stroke;
+    }
+    set strokes(x){
+        this._strokes=x;
     }
 
     win(){
