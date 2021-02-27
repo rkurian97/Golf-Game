@@ -65,9 +65,9 @@ function match(player){
         var y= -12/61*x+20100/61;
         drawBall(x,y);
 
-        document.getElementById("score").innerHTML=player._name+ ": ";
+        document.getElementById("score").innerHTML=player._name+ ": "; // Display Player
         
-    }else if (stroke<=4 && x>730){      //Ball reached hole condition 1: if ball is close enough to hole. PLayer scored. Startover becomes true player round is over 
+    }else if (stroke<=4 && x>730){      //Ball reached hole condition 1: ball is close enough to hole and strokes is less than 4. PLayer scored. Startover becomes true player round is over 
         var y= -12/61*x+20100/61;
         drawBall(x,y);
 
