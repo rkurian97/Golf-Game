@@ -7,39 +7,50 @@ const canvas= document.getElementById("bckgCanvas")
 const ctx= canvas.getContext("2d");
 
 //Draw background
-const golfcourse= document.getElementById("golfcourse")
-ctx.drawImage(golfcourse, 0, 0);
+const golfcourse = new Image()
+golfcourse.src = 'assets/images/golfcourse.jpg'
+golfcourse.onload=function(){
 
-// Drawing the hole 
-ctx.beginPath();
-ctx.arc(760, 180, 10, 0, 2 * Math.PI);
-ctx.lineWidth = 0;
-ctx.fillStyle = 'red';
-ctx.fill();
-ctx.closePath();
+    ctx.drawImage(golfcourse, 0, 0);
+
+    // Drawing the hole 
+    ctx.beginPath();
+    ctx.arc(760, 190, 10, 0, 2 * Math.PI);
+    ctx.lineWidth = 0;
+    ctx.fillStyle = 'red';
+    ctx.fill();
+    ctx.closePath();
+}
 
 //second canvas
 const canvas2 = document.getElementById("myCanvas");
 const ctx2 = canvas2.getContext("2d");
 
 //getting golfball image
-const golfball = document.getElementById("golfball");
+const golfball = new Image()
+golfball.src = 'assets/images/golfball2.png'
 
 //Drawing inital golfball onload
-var startx= 150;
-var starty=300;
+const startx= 150;
+const starty=300;
 
 golfball.onload=function(){
     ctx2.drawImage(golfball, startx, starty, 42, 44.3);
 }
 
 //initializing some variables for the click function
-var min= startx;
-var stroke=0;
-var tie= 0;
-var startover= false;
-var playerTurn=true;
-scoretype= ['Hole-in-One', 'Double Eagle', 'Eagle', 'Birdie', 'Par'];
+let min= startx;
+let stroke=0;
+let tie= 0;
+let startover= false;
+let playerTurn=true;
+const scoretype= ['Hole-in-One', 'Double Eagle', 'Eagle', 'Birdie', 'Par'];
+//Inital display of player scores
+document.getElementById("p1wins").innerHTML="Player 1 wins: "+player1.wins;
+document.getElementById("p1losses").innerHTML="Player 1 losses: "+player1.losses;
+document.getElementById("p2wins").innerHTML="Player 2 wins: "+player2.wins;
+document.getElementById("p2losses").innerHTML="Player 2 losses: "+player2.losses;
+document.getElementById("ties").innerHTML="Ties: "+tie;
 
 // draw ball function. clearing the second canvas to get rid of old golfball position. then drawing new one. 
 function drawBall(x,y){
@@ -51,7 +62,7 @@ function drawBall(x,y){
 function match(player){
     //if startover is true then ball goes back to original position, otherwise ball will continue moving towards hole
     if (startover){
-        x=150;
+        var x=150;
         min=x;
         stroke=0;
     }else{
@@ -60,15 +71,15 @@ function match(player){
     }
     startover= false;
 
-    if(stroke<=4 && x<730){            // if number of strokes is<4 and not close enough to hole. ball continues going close to hole
+    if(stroke<=4 && x<720){            // if number of strokes is<4 and not close enough to hole. ball continues going close to hole
         min=x;
-        var y= -12/61*x+20100/61;
+        let y= -12/61*x+20100/61;
         drawBall(x,y);
 
         document.getElementById("score").innerHTML=player._name+ ": "; // Display Player
         
-    }else if (stroke<=4 && x>730){      //Ball reached hole condition 1: ball is close enough to hole and strokes is less than 4. PLayer scored. Startover becomes true player round is over 
-        var y= -12/61*x+20100/61;
+    }else if (stroke<=4 && x>720){      //Ball reached hole condition 1: ball is close enough to hole and strokes is less than 4. PLayer scored. Startover becomes true player round is over 
+        let y= -12/61*x+20100/61;
         drawBall(x,y);
 
         player._stroke=stroke;
@@ -91,8 +102,8 @@ function match(player){
         
     }
     else {                            //Ball reached hole condition 2: if stroke reaches 5 then force ball to go to hole by drawing ball at x=755 and startsover. 
-        var x= 755;
-        var y= -12/61*x+20100/61;
+        let x= 740;
+        let y= -12/61*x+20100/61;
         drawBall(x,y);
 
         player._stroke=stroke;
