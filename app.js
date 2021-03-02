@@ -1,6 +1,14 @@
 //Players
 let player1= new Players("Player 1");
 let player2= new Players("Player 2");
+if(localStorage==null){
+    localStorage.setItem('Player 1', JSON.stringify(player1));
+    localStorage.setItem('Player 2', JSON.stringify(player2));
+}else{
+    let player1= localStorage.getItem('Player 1');
+    let player2= localStorage.getItem('Player 2');
+}
+
 
 //Background canvas
 const canvas= document.getElementById("bckgCanvas")
@@ -52,7 +60,7 @@ document.getElementById("p2wins").innerHTML="Player 2 wins: "+player2.wins;
 document.getElementById("p2losses").innerHTML="Player 2 losses: "+player2.losses;
 document.getElementById("ties").innerHTML="Ties: "+tie;
 
-// draw ball function. clearing the second canvas to get rid of old golfball position. then drawing new one.
+// draw ball function. clearing the second canvas to get rid of old golfball position. then drawing new one. 
 function drawBall(x,y){
     ctx2.clearRect(0,0, canvas2.width, canvas2.height);
     ctx2.drawImage(golfball, x, y, 42, 44.3);
@@ -84,10 +92,10 @@ function match(player){
 
         player._stroke=stroke;
         startover=true;
-
+        
         document.getElementById("score").innerHTML=player._name+ ": "+ scoretype[stroke-1]; // display the players scores aka Hole-in-One thru Par
 
-        if (playerTurn==false){            // if it is Player 2 turn. Then match is over. compare strokes between player 1/2 and see who won.
+        if (playerTurn==false){            // if it is Player 2 turn. Then match is over. compare strokes between player 1/2 and see who won. 
             console.log(player1.strokes);
             console.log(player2.strokes);
             if (player1.strokes<player2.strokes){
@@ -101,7 +109,7 @@ function match(player){
             }
         }
         playerTurn=!playerTurn;    // switch player
-
+        
     }
     else {                            //Ball reached hole condition 2: if stroke reaches 5 then force ball to go to hole by drawing ball at x=755 and startsover. 
         let x= 740;
@@ -118,10 +126,12 @@ function match(player){
             console.log(player2.strokes);
             if (player1.strokes<player2.strokes){
                 player1.win();
+                player2.lose();
             }else if (player1.strokes==player2.strokes){
                 tie++;
             }else{
                 player2.win();
+                player1.lose();
             }
         }
 
@@ -137,10 +147,10 @@ canvas2.addEventListener('click', function(event){
     }else{                   // if playerturn is false run match with player 2
         match(player2);
     }
-
+    
     //Display results
     document.getElementById("p1wins").innerHTML="Player 1 wins: "+player1.wins;
-    document.getElementById("p1losses").innerHTML="Player 1 losses: "+player1.losses;
+    document.getElementById("p1losses").innerHTML="Player 1 losses: "+player1._losses;
     document.getElementById("p2wins").innerHTML="Player 2 wins: "+player2.wins;
     document.getElementById("p2losses").innerHTML="Player 2 losses: "+player2.losses;
     document.getElementById("ties").innerHTML="Ties: "+tie;
