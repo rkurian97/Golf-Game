@@ -1,13 +1,12 @@
 //Players
-let player1= new Players("Player 1");
-let player2= new Players("Player 2");
-if(localStorage==null){
-    localStorage.setItem('Player 1', JSON.stringify(player1));
-    localStorage.setItem('Player 2', JSON.stringify(player2));
-}else{
-    let player1= localStorage.getItem('Player 1');
-    let player2= localStorage.getItem('Player 2');
+var player1= new Players("Player 1");
+var player2= new Players("Player 2");
+
+if(localStorage.getItem('Player 1')){
+     player1= JSON.parse(localStorage.getItem("Player 1"));
+     player2=JSON.parse(localStorage.getItem("Player 2"));
 }
+   
 
 
 //Background canvas
@@ -147,7 +146,8 @@ canvas2.addEventListener('click', function(event){
     }else{                   // if playerturn is false run match with player 2
         match(player2);
     }
-    
+    localStorage.setItem('Player 1', JSON.stringify(player1));
+    localStorage.setItem('Player 2', JSON.stringify(player2));
     //Display results
     document.getElementById("p1wins").innerHTML="Player 1 wins: "+player1.wins;
     document.getElementById("p1losses").innerHTML="Player 1 losses: "+player1._losses;
